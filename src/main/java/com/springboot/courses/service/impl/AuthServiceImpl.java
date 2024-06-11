@@ -28,6 +28,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,6 +44,7 @@ import java.util.List;
 public class AuthServiceImpl implements AuthService {
 
     @Autowired private AuthenticationManager authenticationManager;
+    @Autowired private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired private JwtTokenProvider jwtTokenProvider;
     @Autowired private UserRepository userRepository;
     @Autowired private RoleRepository roleRepository;
@@ -53,6 +55,12 @@ public class AuthServiceImpl implements AuthService {
     public JWTAuthResponse login(LoginDto loginDto) {
 
         try {
+//            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+//                    loginDto.getEmail(), loginDto.getPassword()
+//            );
+//
+//            Authentication authenticationTmp = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtTokenProvider.generateToken(authentication);
