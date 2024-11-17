@@ -1,16 +1,22 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/onlinecourse_db
+    url: jdbc:mysql://localhost:3307/online_course_db
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
     show-sql: false
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: src/main/resources/db/migrations
 
   servlet:
     multipart:

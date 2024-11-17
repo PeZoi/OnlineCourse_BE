@@ -46,8 +46,6 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // Cấu hình cors
